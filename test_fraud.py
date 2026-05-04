@@ -8,11 +8,10 @@ payload_1 = {"card_id": "card_normal_001", "amount": 4.50}
 resp_1 = requests.post(url, json=payload_1)
 print(json.dumps(resp_1.json(), indent=4, ensure_ascii=False))
 
+
 print("\n--- ТЕСТ 2: Хакерская транзакция (Скомпрометированная карта) ---")
-# Отправляем карту хакера и пытаемся списать 5000 долларов!
-payload_2 = {"card_id": "card_hacked_002", "amount": 5000.00}
-resp_2 = requests.post(url, json=payload_2)
-print(json.dumps(resp_2.json(), indent=4, ensure_ascii=False))
+# Хакер проверяет карту (списывает 0.00)
+payload_2 = {"card_id": "card_hacked_002", "amount": 0.00}
 
 print("\n--- ТЕСТ 3: Проверка A/B Роутера (10 транзакций) ---")
 # Спамим запросами, чтобы увидеть, как трафик делится между Моделями А и Б

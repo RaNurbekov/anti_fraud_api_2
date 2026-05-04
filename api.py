@@ -51,16 +51,16 @@ def scan_transaction(tx: Transaction):
     df = pd.DataFrame([features])
     
     # --- 2. A/B ТЕСТИРОВАНИЕ (РОУТЕР) ---
-    # Генерируем случайное число от 0 до 1
     if random.random() < 0.20:
-        # 20% трафика отдаем новой модели
         active_model = ml_models["model_b"]
         model_name = "Model B (Challenger)"
     else:
-        # 80% трафика обрабатывает проверенная модель
         active_model = ml_models["model_a"]
         model_name = "Model A (Champion)"
         
+    # --- ИНЖЕНЕРНЫЙ ЩИТ: Выравниваем порядок колонок строго как при обучении! ---
+    df = df[active_model.feature_name_]
+    
     # --- 3. ПРЕДСКАЗАНИЕ ---
     prob = active_model.predict_proba(df)[:, 1][0]
     
